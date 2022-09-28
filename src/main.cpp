@@ -2,12 +2,14 @@
 #include <GLFW/glfw3.h>
 #include <iostream>
 
+#include "Renderer/ShaderProgram.h"
+
 int g_windowSizeX = 640;
 int g_windowSizeY = 480;
 
 GLfloat point[] = {
      0.0f,  0.5f, 0.0f,
-     0.1f, -0.1f, 0.0f,
+     0.5f, -0.5f, 0.0f,
     -0.5f, -0.5f, 0.0f
 };
 
@@ -88,21 +90,14 @@ int main(void)
 	
 	glClearColor(1, 1, 0, 1);
 
-    GLuint vs = glCreateShader(GL_VERTEX_SHADER);
-    glShaderSource(vs, 1, &vertex_shader, nullptr);
-    glCompileShader(vs);
+    std::string vertexShader(vertex_shader);
+    std::string fragmentShader(fragment_shader);
+    Renderer::ShaderProgram shader_program(vertexShader, fragmentShader);
 
-    GLuint fs = glCreateShader(GL_FRAGMENT_SHADER);
-    glShaderSource(fs, 1, &fragment_shader, nullptr);
-    glCompileShader(fs);
-
-    GLuint shader_program = glCreateProgram();
-    glAttachShader(shader_program, vs);
-    glAttachShader(shader_program, fs);
-    glLinkProgram(shader_program);
-
-    glDeleteShader(vs);
-    glDeleteShader(fs);
+    if (!shader_program.isCompiled())
+    {
+        std::cerr << "Can't create shader program!\n";
+    }
 
 
     GLuint points_vbo = 0;
@@ -135,7 +130,7 @@ int main(void)
         /* Render here */
         glClear(GL_COLOR_BUFFER_BIT);
 
-        glUseProgram(shader_program);
+        shader_program.use();
         glBindVertexArray(vao);
         glDrawArrays(GL_TRIANGLES,0,3);
 
