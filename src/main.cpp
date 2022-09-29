@@ -5,6 +5,8 @@
 #include "Renderer/ShaderProgram.h"
 #include "Resources/ResourceManager.h"
 
+#include "Renderer/Texture2D.h"
+
 int g_windowSizeX = 640;
 int g_windowSizeY = 480;
 
@@ -20,23 +22,12 @@ GLfloat colors[] = {
     0.0f, 0.0f, 1.0f
 };
 
-const char* vertex_shader =
-"#version 460\n"
-"layout(location = 0) in vec3 vertex_position;"
-"layout(location = 1) in vec3 vertex_color;"
-"out vec3 color;"
-"void main() {"
-"   color = vertex_color;"
-"   gl_Position = vec4(vertex_position, 1.0);"
-"}";
+GLfloat texCoord[] = {
+    0.5f, 1.0f,
+    1.0f, 0.0f, 
+    0.0f, 0.0f
+};
 
-const char* fragment_shader =
-"#version 460\n"
-"in vec3 color;"
-"out vec4 frag_color;"
-"void main() {"
-"   frag_color = vec4(color, 1.0);"
-"}";
 
 void glfwWindowSizeCallback(GLFWwindow* pWindow, int width, int height)
 {
@@ -55,9 +46,6 @@ void glfwKeyCallback(GLFWwindow* pWindow, int key, int scancode, int action, int
 
 int main(int argc, char** argv)
 {
-
-
-
     /* Initialize the library */
     if (!glfwInit())
     {
@@ -105,6 +93,8 @@ int main(int argc, char** argv)
             return -1;
         }
 
+        auto tex = res.loadTexture("DefaultTexture", "res/textures/map_16x16.png");
+
         GLuint points_vbo = 0;
         glGenBuffers(1, &points_vbo);
         glBindBuffer(GL_ARRAY_BUFFER, points_vbo);
@@ -113,8 +103,15 @@ int main(int argc, char** argv)
         GLuint colors_vbo = 0;
         glGenBuffers(1, &colors_vbo);
         glBindBuffer(GL_ARRAY_BUFFER, colors_vbo);
-
         glBufferData(GL_ARRAY_BUFFER, sizeof(colors), colors, GL_STATIC_DRAW);
+
+
+        GLuint texCoord_vbo = 0;
+        glGenBuffers(1, &texCoord_vbo);
+        glBindBuffer(GL_ARRAY_BUFFER, texCoord_vbo);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(texCoord), texCoord, GL_STATIC_DRAW);
+
+
 
         GLuint vao = 0;
         glGenVertexArrays(1, &vao);
@@ -129,6 +126,16 @@ int main(int argc, char** argv)
         glBindBuffer(GL_ARRAY_BUFFER, colors_vbo);
         glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
 
+
+        glEnableVertexAttribArray(2);
+        glBindBuffer(GL_ARRAY_BUFFER, texCoord_vbo);
+        glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 0, nullptr);
+
+        pDefaultSHaderProgram->use();
+        pDefaultSHaderProgram->setInt("tex", 0);
+
+
+
         /* Loop until the user closes the window */
         while (!glfwWindowShouldClose(pWindow))
         {
@@ -137,6 +144,8 @@ int main(int argc, char** argv)
 
             pDefaultSHaderProgram->use();
             glBindVertexArray(vao);
+            tex->bind();
+
             glDrawArrays(GL_TRIANGLES, 0, 3);
 
 

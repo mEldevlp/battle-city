@@ -11,6 +11,7 @@ namespace Renderer {
 
 		bool isCompiled() const { return m_isCompiled; }
 		void use() const;
+		void setInt(const std::string& textureName, const GLint value);
 
 		ShaderProgram() = delete;
 		ShaderProgram(ShaderProgram&) = delete;
