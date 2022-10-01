@@ -1,5 +1,7 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+#include <glm/vec2.hpp>
+
 #include <iostream>
 
 #include "Renderer/ShaderProgram.h"
@@ -7,8 +9,7 @@
 
 #include "Renderer/Texture2D.h"
 
-int g_windowSizeX = 640;
-int g_windowSizeY = 480;
+glm::ivec2 g_windowSize(640, 480);
 
 GLfloat point[] = {
      0.0f,  0.5f, 0.0f,
@@ -28,21 +29,79 @@ GLfloat texCoord[] = {
     0.0f, 0.0f
 };
 
+void triangleMoveX(float step)
+{
+    point[0] += step;
+    point[3] += step;
+    point[6] += step;
+
+    GLuint points_vbo = 0;
+    glGenBuffers(1, &points_vbo);
+    glBindBuffer(GL_ARRAY_BUFFER, points_vbo);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(point), point, GL_STATIC_DRAW);
+
+    glEnableVertexAttribArray(0);
+    glBindBuffer(GL_ARRAY_BUFFER, points_vbo);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
+}
+
+void triangleMoveY(float step)
+{
+    point[1] += step;
+    point[4] += step;
+    point[7] += step;
+
+    GLuint points_vbo = 0;
+    glGenBuffers(1, &points_vbo);
+    glBindBuffer(GL_ARRAY_BUFFER, points_vbo);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(point), point, GL_STATIC_DRAW);
+
+    glEnableVertexAttribArray(0);
+    glBindBuffer(GL_ARRAY_BUFFER, points_vbo);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
+}
 
 void glfwWindowSizeCallback(GLFWwindow* pWindow, int width, int height)
 {
-    g_windowSizeX = width;
-    g_windowSizeY = height;
-    glViewport(0, 0, g_windowSizeX, g_windowSizeY);
-}
-void glfwKeyCallback(GLFWwindow* pWindow, int key, int scancode, int action, int mode)
-{
-    if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
-    {
-        glfwSetWindowShouldClose(pWindow, GLFW_TRUE);
-    }
+    g_windowSize.x = width;
+    g_windowSize.y = height;
+    glViewport(0, 0, g_windowSize.x, g_windowSize.y);
 }
 
+void glfwKeyCallback(GLFWwindow* pWindow, int key, int scancode, int action, int mode)
+{
+    if (action == GLFW_PRESS)
+    {
+        switch (key)
+        {
+        case GLFW_KEY_LEFT:
+        {
+            std::cout << "<- LEFT" << std::endl;
+            triangleMoveX(-.1f);
+           
+            break;
+        }
+        case GLFW_KEY_RIGHT:
+        {
+            std::cout << "-> RIGHT" << std::endl;
+            triangleMoveX(.1f);
+            break;
+
+        }
+        case GLFW_KEY_UP: 
+        {
+            triangleMoveY(.1f);
+            std::cout << "^ - UP" << std::endl; break;
+        }
+        case GLFW_KEY_DOWN:
+        {
+            triangleMoveY(-.1f);
+            std::cout << "V - DOWN" << std::endl; break;
+        }
+        default: std::cout << (char)key << std::endl;
+        }
+    }
+}
 
 int main(int argc, char** argv)
 {
@@ -58,7 +117,7 @@ int main(int argc, char** argv)
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
     /* Create a windowed mode window and its OpenGL context */
-    GLFWwindow* pWindow = glfwCreateWindow(g_windowSizeX, g_windowSizeY, "Battle city", nullptr, nullptr);
+    GLFWwindow* pWindow = glfwCreateWindow(g_windowSize.x, g_windowSize.y, "Battle city", nullptr, nullptr);
     if (!pWindow)
     {
         std::cout << "glfwCreateWindow fail started!" << std::endl;
@@ -77,6 +136,7 @@ int main(int argc, char** argv)
         std::cout << "Cant load GLAD" << std::endl;
         return -1;
     }
+
     std::cout << "Renderer: " << glGetString(GL_RENDERER) << std::endl;
     std::cout << "OpenGL version: " << glGetString(GL_VERSION) << std::endl;
 
@@ -111,12 +171,9 @@ int main(int argc, char** argv)
         glBindBuffer(GL_ARRAY_BUFFER, texCoord_vbo);
         glBufferData(GL_ARRAY_BUFFER, sizeof(texCoord), texCoord, GL_STATIC_DRAW);
 
-
-
         GLuint vao = 0;
         glGenVertexArrays(1, &vao);
         glBindVertexArray(vao);
-
 
         glEnableVertexAttribArray(0);
         glBindBuffer(GL_ARRAY_BUFFER, points_vbo);
@@ -126,15 +183,12 @@ int main(int argc, char** argv)
         glBindBuffer(GL_ARRAY_BUFFER, colors_vbo);
         glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
 
-
         glEnableVertexAttribArray(2);
         glBindBuffer(GL_ARRAY_BUFFER, texCoord_vbo);
         glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 0, nullptr);
 
         pDefaultSHaderProgram->use();
         pDefaultSHaderProgram->setInt("tex", 0);
-
-
 
         /* Loop until the user closes the window */
         while (!glfwWindowShouldClose(pWindow))
