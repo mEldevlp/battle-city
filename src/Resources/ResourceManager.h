@@ -6,7 +6,12 @@
 #include <vector>
 
 
-namespace Renderer { class ShaderProgram; class Texture2D; class Sprite; }
+namespace Renderer {
+	class ShaderProgram;
+	class Texture2D;
+	class Sprite;
+	class AnimatedSprite;
+}
 
 class ResourceManager {
 public:
@@ -42,6 +47,16 @@ public:
 		const unsigned int subTextureHeight);
 
 
+	std::shared_ptr<Renderer::AnimatedSprite> loadAnimatedSprite(const std::string& spriteName,
+		const std::string& textureName,
+		const std::string& shaderName,
+		const unsigned int spriteWidth,
+		const unsigned int spriteHeight,
+		const std::string& subTextureName = "default");
+
+	std::shared_ptr<Renderer::AnimatedSprite> getAnimatedSprite(const std::string& spriteName);
+
+
 private:
 	std::string getFileString(const std::string& relativeFilePath) const;
 
@@ -53,6 +68,9 @@ private:
 
 	typedef std::map<const std::string, std::shared_ptr<Renderer::Sprite>> SpritesMap;
 	SpritesMap m_sprites;
+
+	typedef std::map<const std::string, std::shared_ptr<Renderer::AnimatedSprite>> AnimatedSpritesMap;
+	AnimatedSpritesMap m_animatedSprites;
 
 	std::string m_path;
 };
