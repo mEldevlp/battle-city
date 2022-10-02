@@ -23,6 +23,9 @@ add_executable(${PROJECT_NAME}
 	src/Resources/ResourceManager.h
 
 	src/Resources/stb_image.h
+
+	src/Game/Game.h
+	src/Game/Game.cpp
 )
 
 
