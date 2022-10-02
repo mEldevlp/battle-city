@@ -168,7 +168,24 @@ int main(int argc, char** argv)
         auto tex = res.loadTexture("DefaultTexture", "res/textures/map_16x16.png");
 
 
-        auto pSprite = res.loadSprite("newSprite", "DefaultTexture", "SpriteShader", 50, 100);
+        std::vector<std::string> subTexturesNames = {
+            "block",
+            "topBlock",
+            "bottomBlock",
+            "leftBlock",
+            "rightBlock",
+            "topLeftBlock",
+            "topRightBlock",
+            "bottomLeftBlock",
+            "bottomRightBlock",
+            "beton"
+        };
+
+        auto pTextureAtlas = res.loadTextureAtlas("DefaultTextureAtlas", "res/textures/map_16x16.png", std::move(subTexturesNames), 16, 16);
+
+
+
+        auto pSprite = res.loadSprite("NewSprite", "DefaultTextureAtlas", "SpriteShader", 100, 100, "beton");
         pSprite->setPosition(glm::vec2(300, 100));
 
 
