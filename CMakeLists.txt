@@ -32,6 +32,9 @@ add_executable(${PROJECT_NAME}
 	res/shaders/fragment.frag
 	res/shaders/fSprite.frag
 	res/shaders/vSprite.vert
+
+	res/textures/map_16x16.png
+	res/textures/tanks.png
 )
 
 set_target_properties(${PROJECT_NAME}  PROPERTIES
@@ -39,6 +42,16 @@ set_target_properties(${PROJECT_NAME}  PROPERTIES
 	res/shaders/fragment.frag
 	res/shaders/fSprite.frag
 	res/shaders/vSprite.vert")
+
+	
+file(GLOB_RECURSE SHADERS LIST_DIRECTORIES false
+	"${CMAKE_SOURCE_DIR}/res/shaders/*.frag" 
+	"${CMAKE_SOURCE_DIR}/res/shaders/*.vert"
+	"${CMAKE_SOURCE_DIR}/res/textures/*.png"
+)
+
+source_group("Resources Files" FILES ${SHADERS})
+
 
 target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_17)
 
@@ -61,3 +74,5 @@ set_target_properties(${PROJECT_NAME} PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAK
 add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD 
 							COMMAND ${CMAKE_COMMAND} -E copy_directory
 							${CMAKE_SOURCE_DIR}/res $<TARGET_FILE_DIR:${PROJECT_NAME}>/res)
+
+
