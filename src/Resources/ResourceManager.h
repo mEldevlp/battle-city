@@ -58,6 +58,11 @@ public:
 
 	static std::shared_ptr<Renderer::AnimatedSprite> getAnimatedSprite(const std::string& spriteName);
 
+	static const char* m_vertexShader;
+	static const char* m_fragmentShader;
+	static const char* m_vSpriteShader;
+	static const char* m_fSpriteShader;
+	static const char* m_map16x16;
 
 private:
 	static  std::string getFileString(const std::string& relativeFilePath);
@@ -75,4 +80,6 @@ private:
 	static  AnimatedSpritesMap m_animatedSprites;
 
 	static std::string m_path;
+
+
 };

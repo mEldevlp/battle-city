@@ -65,34 +65,36 @@ int main(int argc, char** argv)
 
     glClearColor(0, 0, 0, 1);
 
+    
+    ResourceManager::setExecutablePath(argv[0]);
+
+    g_game.init();
+
+    auto lastTime = std::chrono::high_resolution_clock::now();
+
+    /* Loop until the user closes the window */
+    while (!glfwWindowShouldClose(pWindow))
     {
-        ResourceManager::setExecutablePath(argv[0]);
+        auto currentTime = std::chrono::high_resolution_clock::now();
+        uint64_t duration = std::chrono::duration_cast<std::chrono::nanoseconds>(currentTime - lastTime).count();
+        lastTime = currentTime;
 
-        g_game.init();
+        g_game.update(duration);
 
-        auto lastTime = std::chrono::high_resolution_clock::now();
+        /* Render here */
+        glClear(GL_COLOR_BUFFER_BIT);
 
-        /* Loop until the user closes the window */
-        while (!glfwWindowShouldClose(pWindow))
-        {
-            auto currentTime = std::chrono::high_resolution_clock::now();
-            uint64_t duration = std::chrono::duration_cast<std::chrono::nanoseconds>(currentTime - lastTime).count();
-            lastTime = currentTime;
+        g_game.render();
 
-            g_game.update(duration);
+        /* Swap front and back buffers */
+        glfwSwapBuffers(pWindow);
 
-            /* Render here */
-            glClear(GL_COLOR_BUFFER_BIT);
-            g_game.render();
-
-            /* Swap front and back buffers */
-            glfwSwapBuffers(pWindow);
-
-            /* Poll for and process events */
-            glfwPollEvents();
-        }
-        ResourceManager::unloadAllResources();
+        /* Poll for and process events */
+        glfwPollEvents();
     }
+
+    ResourceManager::unloadAllResources();
+    
 
     glfwTerminate();
     return 0;

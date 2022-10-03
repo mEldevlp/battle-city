@@ -14,12 +14,17 @@
 
 #include "stb_image.h"
 
-
 ResourceManager::ShaderProgramsMap ResourceManager::m_shaderPrograms;
 ResourceManager::TexturesMap ResourceManager::m_textures;
 ResourceManager::SpritesMap ResourceManager::m_sprites;
 ResourceManager::AnimatedSpritesMap ResourceManager::m_animatedSprites;
 std::string ResourceManager::m_path;
+
+const char* ResourceManager::m_vertexShader = "res\\shaders\\vertex.vert";
+const char* ResourceManager::m_fragmentShader = "res\\shaders\\fragment.frag";
+const char* ResourceManager::m_vSpriteShader = "res\\shaders\\vSprite.vert";
+const char* ResourceManager::m_fSpriteShader = "res\\shaders\\fSprite.frag";
+const char* ResourceManager::m_map16x16 = "res/textures/map_16x16.png";
 
 
 void ResourceManager::setExecutablePath(const std::string& executablePath)
