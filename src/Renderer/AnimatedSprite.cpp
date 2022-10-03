@@ -3,7 +3,7 @@
 #include <iostream>
 
 
-namespace Renderer
+namespace RenderEngine
 {
 	AnimatedSprite::AnimatedSprite(const std::shared_ptr<Texture2D> pTexture,
 		const std::string initialSubTexture,

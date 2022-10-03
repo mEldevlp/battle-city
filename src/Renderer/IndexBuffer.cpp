@@ -1,7 +1,7 @@
 #include "IndexBuffer.h"
 
 
-namespace Renderer {
+namespace RenderEngine {
 	IndexBuffer::IndexBuffer()
 		: m_id(0)
 	{}

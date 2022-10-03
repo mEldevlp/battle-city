@@ -1,7 +1,7 @@
 #include "Texture2D.h"
 #include <vector>
 
-namespace Renderer {
+namespace RenderEngine {
 
 	Texture2D::Texture2D(const GLuint width,
 		const GLuint height,

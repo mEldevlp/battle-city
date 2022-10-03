@@ -1,7 +1,7 @@
 #include "VertexBuffer.h"
 
 
-namespace Renderer {
+namespace RenderEngine {
 	VertexBuffer::VertexBuffer()
 		: m_id(0)
 	{}

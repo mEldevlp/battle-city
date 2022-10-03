@@ -6,7 +6,7 @@
 #include <glm/mat4x4.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
-namespace Renderer
+namespace RenderEngine
 {
 	Sprite::Sprite(const std::shared_ptr<Texture2D> pTexture,
 		const std::string initialSubTexture,
@@ -53,7 +53,6 @@ namespace Renderer
 		m_vertexArray.addBuffer(m_textureCoordsBuffer, textureCoordsLayout);
 
 		m_indexBuffer.init(Indices, 6 * sizeof(GLint));
-
 
 		m_vertexArray.unBind();
 		m_indexBuffer.unBind();
