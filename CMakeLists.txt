@@ -17,6 +17,8 @@ add_executable(${PROJECT_NAME}
 	src/Renderer/AnimatedSprite.h
 	src/Renderer/VertexBuffer.cpp
 	src/Renderer/VertexBuffer.h
+	src/Renderer/IndexBuffer.cpp
+	src/Renderer/IndexBuffer.h
 	src/Resources/ResourceManager.cpp
 	src/Resources/ResourceManager.h
 	src/Resources/stb_image.h
@@ -37,7 +39,6 @@ set_target_properties(${PROJECT_NAME}  PROPERTIES
 	res/shaders/fragment.frag
 	res/shaders/fSprite.frag
 	res/shaders/vSprite.vert")
-
 
 target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_17)
 
