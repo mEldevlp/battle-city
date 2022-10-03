@@ -42,9 +42,15 @@ void Game::setKey(const int key, const int action)
 	m_keys[key] = action;
 }
 
+const char* vertexShader = "res\\shaders\\vertex.vert";
+const char* fragmentShader = "res\\shaders\\fragment.frag";
+const char* vSpriteShader = "res\\shaders\\vSprite.vert";
+const char* fSpriteShader = "res\\shaders\\fSprite.frag";
+const char* map16x16 = "res/textures/map_16x16.png";
+
 bool Game::init()
 {
-    auto pDefaultSHaderProgram = ResourceManager::loadShaders("DefaultShader", "res\\shaders\\vertex.txt", "res\\shaders\\fragment.txt");
+    auto pDefaultSHaderProgram = ResourceManager::loadShaders("DefaultShader", vertexShader, fragmentShader);
 
     if (!pDefaultSHaderProgram)
     {
@@ -52,7 +58,7 @@ bool Game::init()
         return false;
     }
 
-    auto pSpriteShaderProgram = ResourceManager::loadShaders("SpriteShader", "res\\shaders\\vSprite.txt", "res\\shaders\\fSprite.txt");
+    auto pSpriteShaderProgram = ResourceManager::loadShaders("SpriteShader", vSpriteShader, fSpriteShader);
 
     if (!pSpriteShaderProgram)
     {
@@ -61,7 +67,7 @@ bool Game::init()
     }
 
 
-    auto tex = ResourceManager::loadTexture("DefaultTexture", "res/textures/map_16x16.png");
+    auto tex = ResourceManager::loadTexture("DefaultTexture", map16x16);
 
 
     std::vector<std::string> subTexturesNames = {
@@ -102,7 +108,7 @@ bool Game::init()
     };
 
 
-    auto pTextureAtlas = ResourceManager::loadTextureAtlas("DefaultTextureAtlas", "res/textures/map_16x16.png", std::move(subTexturesNames), 16, 16);
+    auto pTextureAtlas = ResourceManager::loadTextureAtlas("DefaultTextureAtlas", map16x16, std::move(subTexturesNames), 16, 16);
 
     auto pAnimatedSprite = ResourceManager::loadAnimatedSprite("NewAnimSprite", "DefaultTextureAtlas", "SpriteShader", 100, 100, "beton");
     pAnimatedSprite->setPosition(glm::vec2(300, 300));

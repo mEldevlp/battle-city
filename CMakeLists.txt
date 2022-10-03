@@ -26,8 +26,18 @@ add_executable(${PROJECT_NAME}
 
 	src/Game/Game.h
 	src/Game/Game.cpp
+
+	res/shaders/vertex.vert
+	res/shaders/fragment.frag
+	res/shaders/fSprite.frag
+	res/shaders/vSprite.vert
 )
 
+set_target_properties(${PROJECT_NAME}  PROPERTIES
+  RESOURCE "res/shaders/vertex.vert
+	res/shaders/fragment.frag
+	res/shaders/fSprite.frag
+	res/shaders/vSprite.vert")
 
 
 target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_17)
