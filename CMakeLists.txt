@@ -17,6 +17,10 @@ add_executable(${PROJECT_NAME}
 	src/Renderer/AnimatedSprite.h
 	src/Renderer/VertexBuffer.cpp
 	src/Renderer/VertexBuffer.h
+	src/Renderer/VertexArray.cpp
+	src/Renderer/VertexArray.h
+	src/Renderer/VertexBufferLayout.cpp
+	src/Renderer/VertexBufferLayout.h
 	src/Renderer/IndexBuffer.cpp
 	src/Renderer/IndexBuffer.h
 	src/Resources/ResourceManager.cpp
@@ -50,7 +54,7 @@ file(GLOB_RECURSE SHADERS LIST_DIRECTORIES false
 	"${CMAKE_SOURCE_DIR}/res/textures/*.png"
 )
 
-source_group("Resources Files" FILES ${SHADERS})
+source_group("Resource Files" FILES ${SHADERS})
 
 
 target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_17)
@@ -74,5 +78,3 @@ set_target_properties(${PROJECT_NAME} PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAK
 add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD 
 							COMMAND ${CMAKE_COMMAND} -E copy_directory
 							${CMAKE_SOURCE_DIR}/res $<TARGET_FILE_DIR:${PROJECT_NAME}>/res)
-
-

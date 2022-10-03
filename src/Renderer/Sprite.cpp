@@ -20,7 +20,6 @@ namespace Renderer
 								m_rotation(rotation)
 	{
 		const GLfloat vertexCoords[] = {
-		//    X    Y
 			 0.f, 0.f,
 			 0.f, 1.f,
 			 1.f, 1.f,
@@ -30,41 +29,38 @@ namespace Renderer
 		auto subTexture = m_pTexture->getSubTexture(initialSubTexture);
 
 		const GLfloat textureCoords[] = {
-		//    U    V
-            subTexture.leftBottomUV.x, subTexture.leftBottomUV.y,
-            subTexture.leftBottomUV.x, subTexture.rightTopUV.y,
-            subTexture.rightTopUV.x, subTexture.rightTopUV.y,
-			subTexture.rightTopUV.x, subTexture.leftBottomUV.y,
+
+            subTexture.leftBottomUV.x,	subTexture.leftBottomUV.y,
+            subTexture.leftBottomUV.x,	subTexture.rightTopUV.y,
+            subTexture.rightTopUV.x,	subTexture.rightTopUV.y,
+			subTexture.rightTopUV.x,	subTexture.leftBottomUV.y,
 		};
 
 		const GLint Indices[] = {
 			0, 1, 2,
 			2, 3, 0,
 		};
-
-		glGenVertexArrays(1, &m_VAO);
-		glBindVertexArray(m_VAO);
 		
 		m_vertexCoordsBuffer.init(vertexCoords, 8 * sizeof(GLfloat)); // second - 2 * 4
-		glEnableVertexAttribArray(0);
-		glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, nullptr);
+		VertexBufferLayout vertexCoordsLayout;
+		vertexCoordsLayout.addElementLayoutFloat(2, false);
+		m_vertexArray.addBuffer(m_vertexCoordsBuffer, vertexCoordsLayout);
 
 
 		m_textureCoordsBuffer.init(textureCoords, 8 * sizeof(GLfloat)); // second - 2 * 4
-		glEnableVertexAttribArray(1);
-		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, nullptr);
+		VertexBufferLayout textureCoordsLayout;
+		textureCoordsLayout.addElementLayoutFloat(2, false);
+		m_vertexArray.addBuffer(m_textureCoordsBuffer, textureCoordsLayout);
 
 		m_indexBuffer.init(Indices, 6 * sizeof(GLint));
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(Indices), &Indices, GL_STATIC_DRAW);
 
-		glBindBuffer(GL_ARRAY_BUFFER, 0);
-		glBindVertexArray(0);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+
+		m_vertexArray.unBind();
+		m_indexBuffer.unBind();
 	}
 
 	Sprite::~Sprite()
 	{
-		glDeleteVertexArrays(1, &m_VAO);
 	}
 
 	void Sprite::render() const
@@ -79,14 +75,15 @@ namespace Renderer
 		model = glm::translate(model, glm::vec3(-0.5f * m_size.x, -0.5f * m_size.y, 0.f));
 		model = glm::scale(model, glm::vec3(m_size, 1.f));
 
-		glBindVertexArray(m_VAO);
+		m_vertexArray.bind();
+
 		m_pShaderProgram->setMatrix4("modelMat", model);
 		glActiveTexture(GL_TEXTURE0);
 		m_pTexture->bind();
 		
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
 
-		glBindVertexArray(0);
+		m_vertexArray.unBind(); //?
 	}
 
 	void Sprite::setPosition(const glm::vec2& position)

@@ -15,11 +15,8 @@ namespace Renderer {
 			const float rotation = 0.f);
 
 		void insertState(std::string state, std::vector<std::pair<std::string, uint64_t>> subTexturesDuration);
-
 		void render() const override;
-
 		void setState(const std::string& newState);
-
 		void update(const uint64_t delta);
 
 	private:

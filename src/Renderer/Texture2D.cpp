@@ -31,7 +31,7 @@ namespace Renderer {
 		glBindTexture(GL_TEXTURE_2D, 0);
 	}
 
-	Texture2D& Texture2D::operator=(Texture2D&& texture2d)
+	Texture2D& Texture2D::operator=(Texture2D&& texture2d) noexcept
 	{
 		glDeleteTextures(1, &m_ID);
 
@@ -44,7 +44,7 @@ namespace Renderer {
 		return *this;
 	}
 
-	Texture2D::Texture2D(Texture2D&& texture2d)
+	Texture2D::Texture2D(Texture2D&& texture2d) noexcept
 	{
 		m_ID = texture2d.m_ID;
 		texture2d.m_ID = 0; //... Чтобы 2 раза не удалялась текстура
@@ -79,3 +79,4 @@ namespace Renderer {
 		return defaultSubTexture;
 	}
 }
+
