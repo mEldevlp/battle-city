@@ -39,6 +39,7 @@ add_executable(${PROJECT_NAME}
 	res/shaders/fragment.frag
 	res/shaders/fSprite.frag
 	res/shaders/vSprite.vert
+	res/resources.json
 
 	res/textures/map_16x16.png
 	res/textures/tanks.png
@@ -48,13 +49,15 @@ set_target_properties(${PROJECT_NAME}  PROPERTIES
   RESOURCE "res/shaders/vertex.vert
 	res/shaders/fragment.frag
 	res/shaders/fSprite.frag
-	res/shaders/vSprite.vert")
+	res/shaders/vSprite.vert
+	res/resources.json")
 
 	
 file(GLOB_RECURSE SHADERS LIST_DIRECTORIES false
 	"${CMAKE_SOURCE_DIR}/res/shaders/*.frag" 
 	"${CMAKE_SOURCE_DIR}/res/shaders/*.vert"
 	"${CMAKE_SOURCE_DIR}/res/textures/*.png"
+	"${CMAKE_SOURCE_DIR}/res/*.json"
 )
 
 source_group("Resource Files" FILES ${SHADERS})
