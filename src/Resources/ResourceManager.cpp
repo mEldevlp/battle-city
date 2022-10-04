@@ -4,6 +4,8 @@
 #include "../Renderer/Sprite.h"
 #include "../Renderer/AnimatedSprite.h"
 
+#include <../rapidjson/include/rapidjson/document.h>
+#include <../rapidjson/include/rapidjson/error/en.h>
 
 #include <sstream>
 #include <fstream>
@@ -270,4 +272,121 @@ std::shared_ptr<RenderEngine::AnimatedSprite> ResourceManager::getAnimatedSprite
 
 	std::cerr << "Can't find animated sprite: " << spriteName << std::endl;
 	return nullptr;
+}
+
+bool ResourceManager::loadJSONResources(const std::string& JSONpath)
+{
+	const std::string JSONstring = getFileString(JSONpath);
+
+	if (JSONstring.empty())
+	{
+		std::cerr << "No JSON resources file" << std::endl;
+		return false;
+	}
+
+	rapidjson::Document document;
+	rapidjson::ParseResult parseResult = document.Parse(JSONstring.c_str());
+
+	if (!parseResult)
+	{
+		std::cerr << "JSON parse error: " << rapidjson::GetParseError_En(parseResult.Code()) << "(" << parseResult.Offset() << ")" << std::endl;
+		std::cerr << "in json file: " << JSONpath << std::endl;
+		return false;
+	}
+
+	auto shadersIt = document.FindMember("shaders");
+	if (shadersIt != document.MemberEnd())
+	{
+		for (const auto& currentShader : shadersIt->value.GetArray())
+		{
+			const std::string name = currentShader["name"].GetString();
+			const std::string filePath_v = currentShader["filePath_v"].GetString();
+			const std::string filePath_f = currentShader["filePath_f"].GetString();
+			loadShaders(name, filePath_v, filePath_f);
+		}
+	}
+
+	auto textureAtlasesIt = document.FindMember("textureAtlases");
+	if (textureAtlasesIt != document.MemberEnd())
+	{
+		for (const auto& currentTextureAtlas : textureAtlasesIt->value.GetArray())
+		{
+			const std::string name = currentTextureAtlas["name"].GetString();
+			const std::string filePath = currentTextureAtlas["filePath"].GetString();
+			const unsigned int subTextureWidth = currentTextureAtlas["subTextureWidth"].GetUint();
+			const unsigned int subTextureHeight = currentTextureAtlas["subTextureHeight"].GetUint();
+			const auto subTexturesArray = currentTextureAtlas["subTextures"].GetArray();
+			std::vector<std::string> subTextures;
+			subTextures.reserve(subTexturesArray.Size());
+
+			for (const auto& currentsubTexture : subTexturesArray)
+			{
+				subTextures.emplace_back(currentsubTexture.GetString());
+			}
+
+			loadTextureAtlas(name, filePath, std::move(subTextures), subTextureWidth, subTextureHeight);
+		}
+	}
+
+	auto animatedSpritesIt = document.FindMember("animatedSprites");
+	if (animatedSpritesIt != document.MemberEnd())
+	{
+		for (const auto& currentAnimatedSprites : animatedSpritesIt->value.GetArray())
+		{
+			const std::string name = currentAnimatedSprites["name"].GetString();
+			const std::string textureAtlas = currentAnimatedSprites["textureAtlas"].GetString();
+			const std::string shader = currentAnimatedSprites["shader"].GetString();
+			const unsigned int initialWidth = currentAnimatedSprites["initialWidth"].GetUint();
+			const unsigned int initialHeight = currentAnimatedSprites["initialHeight"].GetUint();
+			const std::string initialTexture = currentAnimatedSprites["initialTexture"].GetString();	
+			
+			auto pAnimatedSprite = loadAnimatedSprite(name, textureAtlas, shader, initialWidth, initialHeight, initialTexture);
+			
+			if (!pAnimatedSprite) continue;
+
+			const auto statesArray = currentAnimatedSprites["states"].GetArray();
+
+			for (const auto& currentState : statesArray)
+			{
+				const std::string stateName = currentState["stateName"].GetString();
+
+				std::vector<std::pair<std::string, uint64_t>> frames;
+				const auto framesArray = currentState["frames"].GetArray();
+				frames.reserve(framesArray.Size());
+
+
+				for (const auto& currentFrame : framesArray)
+				{
+					const std::string subTexture = currentFrame["subTexture"].GetString();
+					const uint64_t duration = currentFrame["duration"].GetUint64();
+					frames.emplace_back(std::pair<std::string, uint64_t>(subTexture, duration));
+
+				}
+				pAnimatedSprite->insertState(stateName, std::move(frames));
+
+			}
+		}
+	}
+
+	auto levelsIt = document.FindMember("levels");
+	if (levelsIt != document.MemberEnd())
+	{
+		for (const auto& currentLevel : levelsIt->value.GetArray())
+		{
+			const auto description = currentLevel["description"].GetArray();
+			std::vector<std::string> levelRows;
+			levelRows.reserve(description.Size());
+
+			for (const auto& currentRow : description)
+			{
+				levelRows.emplace_back(currentRow.GetString());
+			}
+
+			//карта
+
+		}
+	}
+
+
+	return true;
 }

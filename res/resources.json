@@ -1,22 +1,18 @@
 {
-	"shaders" : [
+	"shaders": [
 		{
-
-			"name" 			: "spriteShader",
-			"filePath_v" 	: "res/shaders/vSprite.vert",
-			"filePath_f" 	: "res/shaders/fSprite.frag"
+			"name": "SpriteShader",
+			"filePath_v": "res/shaders/vSprite.vert",
+			"filePath_f": "res/shaders/fSprite.frag"
 		}
 	],
 	"textureAtlases": [
 		{
 			"name": "mapTextureAtlas",
 			"filePath": "res/textures/map_16x16.png",
-			"width": 128,
-			"height": 128,
 			"subTextureWidth": 16,
 			"subTextureHeight": 16,
-
-			"subTexture": [
+			"subTextures": [
 				"block",
 				"topBlock",
 				"bottomBlock",
@@ -50,16 +46,12 @@
 				"respawn4"
 			]
 		},
-
 		{
 			"name": "tanksTextureAtlas",
 			"filePath": "res/textures/tanks.png",
-			"width": 256,
-			"height": 256,
 			"subTextureWidth": 16,
 			"subTextureHeight": 16,
-
-			"subTexture": [
+			"subTextures": [
 				"yellowType1_Top1",
 				"yellowType1_Top2",
 				"yellowType1_Left1",
@@ -71,12 +63,11 @@
 			]
 		}
 	],
-
 	"animatedSprites": [
 		{
 			"name": "TanksAnimatedSprite",
 			"textureAtlas": "tanksTextureAtlas",
-			"shader": "spriteShader",
+			"shader": "SpriteShader",
 			"initialWidth": 100,
 			"initialHeight": 100,
 			"initialTexture": "yellowType1_Top1",
@@ -94,7 +85,6 @@
 						}
 					]
 				},
-
 				{
 					"stateName": "tankLeftState",
 					"frames": [
@@ -108,7 +98,6 @@
 						}
 					]
 				},
-
 				{
 					"stateName": "tankBottomState",
 					"frames": [
@@ -135,6 +124,27 @@
 						}
 					]
 				}
+			]
+		}
+	],
+
+	"levels": [
+		{
+			"description": [
+				"DDDDDDDDDDDDD",
+				"D1D1D1D1D1D1D",
+				"D4D4D4D4D4D4D",
+				"D4D4D4D4D4D4D",
+				"D4D4D494D4D4D",
+				"D4D4D3D3D4D4D",
+				"D3D3D1D1D3D3D",
+				"1D11D3D3D11D1",
+				"8D33D1D1D33D8",
+				"D1D1D444D1D1D",
+				"D4D4D4D4D4D4D",
+				"D4D4D3D3D4D4D",
+				"D4D4DH1GDDDDD",
+				"DDDDD0E2DDDDD"
 			]
 		}
 	]

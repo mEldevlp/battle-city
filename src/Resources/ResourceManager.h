@@ -58,6 +58,9 @@ public:
 
 	static std::shared_ptr<RenderEngine::AnimatedSprite> getAnimatedSprite(const std::string& spriteName);
 
+
+	static bool loadJSONResources(const std::string& JSONpath);
+
 	static const char* m_vertexShader;
 	static const char* m_fragmentShader;
 	static const char* m_vSpriteShader;

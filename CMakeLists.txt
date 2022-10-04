@@ -40,9 +40,6 @@ add_executable(${PROJECT_NAME}
 	res/shaders/fSprite.frag
 	res/shaders/vSprite.vert
 	res/resources.json
-
-	res/textures/map_16x16.png
-	res/textures/tanks.png
 )
 
 set_target_properties(${PROJECT_NAME}  PROPERTIES
@@ -76,6 +73,8 @@ target_link_libraries(${PROJECT_NAME} glfw)
 add_subdirectory(external/glad)
 target_link_libraries(${PROJECT_NAME} glad)
 
+
+include_directories(external/rapidjson/include)
 include_directories(external/glm)
 
 set_target_properties(${PROJECT_NAME} PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin/)
