@@ -32,9 +32,15 @@ add_executable(${PROJECT_NAME}
 
 	src/Game/Game.h
 	src/Game/Game.cpp	
-	src/Game/Tank.h
-	src/Game/Tank.cpp
+	src/Game/Level.h
+	src/Game/Level.cpp	
 
+	src/Game/GameObjects/Tank.h
+	src/Game/GameObjects/Tank.cpp
+
+	src/Game/GameObjects/IGameObject.h
+	src/Game/GameObjects/IGameObject.cpp
+	
 	res/shaders/vertex.vert
 	res/shaders/fragment.frag
 	res/shaders/fSprite.frag

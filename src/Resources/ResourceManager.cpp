@@ -158,8 +158,6 @@ std::shared_ptr<RenderEngine::Texture2D> ResourceManager::getTexture(const std::
 std::shared_ptr<RenderEngine::Sprite> ResourceManager::loadSprite(const std::string& spriteName,
 	const std::string& textureName,
 	const std::string& shaderName,
-	const unsigned int spriteWidth,
-	const unsigned int spriteHeight,
 	const std::string& subTextureName)
 {
 	auto pTexture = getTexture(textureName);
@@ -177,9 +175,7 @@ std::shared_ptr<RenderEngine::Sprite> ResourceManager::loadSprite(const std::str
 	std::shared_ptr<RenderEngine::Sprite> newSprite = m_sprites.emplace(textureName, std::make_shared<RenderEngine::Sprite>(
 		pTexture,
 		subTextureName,
-		pShader,
-		glm::vec2(0.f, 0.f),
-		glm::vec2(spriteWidth, spriteHeight))).first->second;
+		pShader)).first->second;
 
 	return newSprite;
 }
@@ -235,8 +231,6 @@ std::shared_ptr<RenderEngine::Texture2D> ResourceManager::loadTextureAtlas(const
 std::shared_ptr<RenderEngine::AnimatedSprite> ResourceManager::loadAnimatedSprite(const std::string& spriteName,
 	const std::string& textureName,
 	const std::string& shaderName,
-	const unsigned int spriteWidth,
-	const unsigned int spriteHeight,
 	const std::string& subTextureName)
 {
 	auto pTexture = getTexture(textureName);
@@ -254,9 +248,7 @@ std::shared_ptr<RenderEngine::AnimatedSprite> ResourceManager::loadAnimatedSprit
 	std::shared_ptr<RenderEngine::AnimatedSprite> newSprite = m_animatedSprites.emplace(spriteName, std::make_shared<RenderEngine::AnimatedSprite>(
 		pTexture,
 		subTextureName,
-		pShader,
-		glm::vec2(0.f, 0.f),
-		glm::vec2(spriteWidth, spriteHeight))).first->second;
+		pShader)).first->second;
 
 	return newSprite;
 }
@@ -336,11 +328,9 @@ bool ResourceManager::loadJSONResources(const std::string& JSONpath)
 			const std::string name = currentAnimatedSprites["name"].GetString();
 			const std::string textureAtlas = currentAnimatedSprites["textureAtlas"].GetString();
 			const std::string shader = currentAnimatedSprites["shader"].GetString();
-			const unsigned int initialWidth = currentAnimatedSprites["initialWidth"].GetUint();
-			const unsigned int initialHeight = currentAnimatedSprites["initialHeight"].GetUint();
 			const std::string initialTexture = currentAnimatedSprites["initialTexture"].GetString();	
 			
-			auto pAnimatedSprite = loadAnimatedSprite(name, textureAtlas, shader, initialWidth, initialHeight, initialTexture);
+			auto pAnimatedSprite = loadAnimatedSprite(name, textureAtlas, shader, initialTexture);
 			
 			if (!pAnimatedSprite) continue;
 

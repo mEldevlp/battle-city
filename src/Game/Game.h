@@ -2,7 +2,7 @@
 
 #include <array>
 #include <glm/vec2.hpp>
-#include "Tank.h"
+#include "GameObjects/Tank.h"
 
 class Game {
 
