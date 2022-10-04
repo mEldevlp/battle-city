@@ -6,6 +6,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 
 #include "GameObjects/Tank.h"
+#include "Level.h"
 
 #include <GLFW/glfw3.h>
 
@@ -36,10 +37,20 @@ void Game::render()
     {
         m_pTank->render();
     }
+
+    if (m_pLevel)
+    {
+        m_pLevel->render();
+    }
 }
 
 void Game::update(const uint64_t delta)
 {
+    if (m_pLevel)
+    {
+        m_pLevel->update(delta);
+    }
+
     if (m_pTank)
     {
         if (m_keys[GLFW_KEY_W])
@@ -80,11 +91,11 @@ bool Game::init()
 {
     ResourceManager::loadJSONResources("res/resources.json");
 
-    auto pSpriteShaderProgram = ResourceManager::getShaderProgram("SpriteShader");
+    auto pSpriteShaderProgram = ResourceManager::getShaderProgram("spriteShader");
 
     if (!pSpriteShaderProgram)
     {
-        std::cerr << "Cant find shader program: " << "SpriteShader" << std::endl;
+        std::cerr << "Cant find shader program: " << "spriteShader" << std::endl;
         return false;
     }
 
@@ -110,7 +121,7 @@ bool Game::init()
     pSpriteShaderProgram->setMatrix4("projectionMat", projectionMatrix);
 
 
-    auto pTanksAnimatedSprite = ResourceManager::getAnimatedSprite("TanksAnimatedSprite");
+    auto pTanksAnimatedSprite = ResourceManager::getAnimatedSprite("tankAnimatedSprite");
     if (!pTanksAnimatedSprite)
     {
         std::cerr << "Cant find animated sprite: " << "TanksAnimatedSprite" << std::endl;
@@ -118,6 +129,8 @@ bool Game::init()
     }
 
     m_pTank = std::make_unique<Tank>(pTanksAnimatedSprite, .0000001f, glm::vec2(0.f, 0.f),glm::vec2(16.f, 16.f));
+
+    m_pLevel = std::make_unique<Level>(ResourceManager::getLevels()[0]);
 
     return true;
 }

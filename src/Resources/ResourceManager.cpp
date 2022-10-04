@@ -21,6 +21,7 @@ ResourceManager::TexturesMap ResourceManager::m_textures;
 ResourceManager::SpritesMap ResourceManager::m_sprites;
 ResourceManager::AnimatedSpritesMap ResourceManager::m_animatedSprites;
 std::string ResourceManager::m_path;
+std::vector<std::vector<std::string>> ResourceManager::m_levels;
 
 const char* ResourceManager::m_vertexShader = "res\\shaders\\vertex.vert";
 const char* ResourceManager::m_fragmentShader = "res\\shaders\\fragment.frag";
@@ -163,16 +164,16 @@ std::shared_ptr<RenderEngine::Sprite> ResourceManager::loadSprite(const std::str
 	auto pTexture = getTexture(textureName);
 	if (!pTexture)
 	{
-		std::cerr << "Can't find the texture: " << textureName << "for the sprite: " << spriteName << std::endl;
+		std::cerr << "Can't find the texture: " << textureName << " for the sprite: " << spriteName << std::endl;
 	}
 
 	auto pShader = getShaderProgram(shaderName);
 	if (!pShader)
 	{
-		std::cerr << "Can't find the shader: " << shaderName << "for the sprite: " << spriteName << std::endl;
+		std::cerr << "Can't find the shader: " << shaderName << " for the sprite: " << spriteName << std::endl;
 	}
 
-	std::shared_ptr<RenderEngine::Sprite> newSprite = m_sprites.emplace(textureName, std::make_shared<RenderEngine::Sprite>(
+	std::shared_ptr<RenderEngine::Sprite> newSprite = m_sprites.emplace(spriteName, std::make_shared<RenderEngine::Sprite>(
 		pTexture,
 		subTextureName,
 		pShader)).first->second;
@@ -328,7 +329,7 @@ bool ResourceManager::loadJSONResources(const std::string& JSONpath)
 			const std::string name = currentAnimatedSprites["name"].GetString();
 			const std::string textureAtlas = currentAnimatedSprites["textureAtlas"].GetString();
 			const std::string shader = currentAnimatedSprites["shader"].GetString();
-			const std::string initialTexture = currentAnimatedSprites["initialTexture"].GetString();	
+			const std::string initialTexture = currentAnimatedSprites["initialSubTexture"].GetString();	
 			
 			auto pAnimatedSprite = loadAnimatedSprite(name, textureAtlas, shader, initialTexture);
 			
@@ -344,7 +345,6 @@ bool ResourceManager::loadJSONResources(const std::string& JSONpath)
 				const auto framesArray = currentState["frames"].GetArray();
 				frames.reserve(framesArray.Size());
 
-
 				for (const auto& currentFrame : framesArray)
 				{
 					const std::string subTexture = currentFrame["subTexture"].GetString();
@@ -358,6 +358,23 @@ bool ResourceManager::loadJSONResources(const std::string& JSONpath)
 		}
 	}
 
+	auto SpritesIt = document.FindMember("sprites");
+	if (SpritesIt != document.MemberEnd())
+	{
+		for (const auto& currentSprites : SpritesIt->value.GetArray())
+		{
+			const std::string name = currentSprites["name"].GetString();
+			const std::string textureAtlas = currentSprites["textureAtlas"].GetString();
+			const std::string shader = currentSprites["shader"].GetString();
+			const std::string subTextureName = currentSprites["subTextureName"].GetString();
+
+			auto pSprite = loadSprite(name, textureAtlas, shader, subTextureName);
+
+			if (!pSprite) continue;
+
+		}
+	}
+
 	auto levelsIt = document.FindMember("levels");
 	if (levelsIt != document.MemberEnd())
 	{
@@ -366,17 +383,28 @@ bool ResourceManager::loadJSONResources(const std::string& JSONpath)
 			const auto description = currentLevel["description"].GetArray();
 			std::vector<std::string> levelRows;
 			levelRows.reserve(description.Size());
+			size_t maxLength = 0;
 
 			for (const auto& currentRow : description)
 			{
 				levelRows.emplace_back(currentRow.GetString());
+				if (maxLength < levelRows.back().length())
+				{
+					maxLength = levelRows.back().length();
+				}	
 			}
 
-			//карта
+			for (auto& currentRow : levelRows)
+			{
+				while (currentRow.length() < maxLength)
+				{
+					currentRow.append("D");
+				}
+			}
 
+			m_levels.emplace_back(std::move(levelRows));
 		}
 	}
-
 
 	return true;
 }

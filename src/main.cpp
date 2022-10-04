@@ -21,7 +21,7 @@ void glfwWindowSizeCallback(GLFWwindow* pWindow, int width, int height)
     g_windowSize.x = width;
     g_windowSize.y = height;
 
-    RenderEngine::Renderer::setViewPort(0, 0, width, height);
+    RenderEngine::Renderer::setViewPort(width, height, 0, 0);
 }
 
 void glfwKeyCallback(GLFWwindow* pWindow, int key, int scancode, int action, int mode)

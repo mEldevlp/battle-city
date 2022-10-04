@@ -2,7 +2,10 @@
 
 #include <array>
 #include <glm/vec2.hpp>
-#include "GameObjects/Tank.h"
+#include <memory>
+
+class Tank;
+class Level;
 
 class Game {
 
@@ -17,7 +20,6 @@ public:
 	bool init();
 
 private:
-
 	std::array<bool, 349> m_keys;
 	enum class EGameState {
 		Active,
@@ -27,4 +29,5 @@ private:
 	EGameState m_eCurrentGameState;
 	glm::ivec2 m_windowSize;
 	std::unique_ptr<Tank> m_pTank;
+	std::unique_ptr<Level> m_pLevel;
 };

@@ -35,11 +35,13 @@ add_executable(${PROJECT_NAME}
 	src/Game/Level.h
 	src/Game/Level.cpp	
 
-	src/Game/GameObjects/Tank.h
-	src/Game/GameObjects/Tank.cpp
-
 	src/Game/GameObjects/IGameObject.h
 	src/Game/GameObjects/IGameObject.cpp
+	src/Game/GameObjects/Tank.h
+	src/Game/GameObjects/Tank.cpp
+	src/Game/GameObjects/BrickWall.cpp
+	src/Game/GameObjects/BrickWall.h
+
 	
 	res/shaders/vertex.vert
 	res/shaders/fragment.frag

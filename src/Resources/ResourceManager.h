@@ -57,6 +57,8 @@ public:
 
 	static bool loadJSONResources(const std::string& JSONpath);
 
+	static const std::vector<std::vector<std::string>>& getLevels() { return m_levels; }
+
 	static const char* m_vertexShader;
 	static const char* m_fragmentShader;
 	static const char* m_vSpriteShader;
@@ -77,6 +79,9 @@ private:
 
 	typedef std::map<const std::string, std::shared_ptr<RenderEngine::AnimatedSprite>> AnimatedSpritesMap;
 	static  AnimatedSpritesMap m_animatedSprites;
+
+	static std::vector<std::vector<std::string>> m_levels;
+
 
 	static std::string m_path;
 
