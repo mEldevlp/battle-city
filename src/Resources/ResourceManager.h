@@ -10,7 +10,6 @@ namespace RenderEngine {
 	class ShaderProgram;
 	class Texture2D;
 	class Sprite;
-	class AnimatedSprite;
 }
 
 class ResourceManager {
@@ -47,23 +46,17 @@ public:
 		const unsigned int subTextureHeight);
 
 
-	static std::shared_ptr<RenderEngine::AnimatedSprite> loadAnimatedSprite(const std::string& spriteName,
-		const std::string& textureName,
-		const std::string& shaderName,
-		const std::string& subTextureName = "default");
+	//static std::shared_ptr<RenderEngine::AnimatedSprite> loadAnimatedSprite(const std::string& spriteName,
+	//	const std::string& textureName,
+	//	const std::string& shaderName,
+	//	const std::string& subTextureName = "default");
 
-	static std::shared_ptr<RenderEngine::AnimatedSprite> getAnimatedSprite(const std::string& spriteName);
+	//static std::shared_ptr<RenderEngine::AnimatedSprite> getAnimatedSprite(const std::string& spriteName);
 
 
 	static bool loadJSONResources(const std::string& JSONpath);
 
 	static const std::vector<std::vector<std::string>>& getLevels() { return m_levels; }
-
-	static const char* m_vertexShader;
-	static const char* m_fragmentShader;
-	static const char* m_vSpriteShader;
-	static const char* m_fSpriteShader;
-	static const char* m_map16x16;
 
 private:
 	static  std::string getFileString(const std::string& relativeFilePath);
@@ -77,13 +70,8 @@ private:
 	typedef std::map<const std::string, std::shared_ptr<RenderEngine::Sprite>> SpritesMap;
 	static  SpritesMap m_sprites;
 
-	typedef std::map<const std::string, std::shared_ptr<RenderEngine::AnimatedSprite>> AnimatedSpritesMap;
-	static  AnimatedSpritesMap m_animatedSprites;
-
 	static std::vector<std::vector<std::string>> m_levels;
 
-
 	static std::string m_path;
-
 
 };

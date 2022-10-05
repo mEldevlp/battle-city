@@ -17,7 +17,6 @@
 #include "../Resources/ResourceManager.h"
 #include "../Renderer/Texture2D.h"
 #include "../Renderer/Sprite.h"
-#include "../Renderer/AnimatedSprite.h"
 
 
 Game::Game(const glm::vec2& windowSize) : m_eCurrentGameState(EGameState::Active), m_windowSize(windowSize)
@@ -120,15 +119,11 @@ bool Game::init()
     pSpriteShaderProgram->setInt("tex", 0);
     pSpriteShaderProgram->setMatrix4("projectionMat", projectionMatrix);
 
-
-    auto pTanksAnimatedSprite = ResourceManager::getAnimatedSprite("tankAnimatedSprite");
-    if (!pTanksAnimatedSprite)
-    {
-        std::cerr << "Cant find animated sprite: " << "TanksAnimatedSprite" << std::endl;
-        return false;
-    }
-    
-    m_pTank = std::make_unique<Tank>(pTanksAnimatedSprite, 6.5e-8f, glm::vec2(0.f, 0.f),glm::vec2(16.f, 16.f));
+    m_pTank = std::make_unique<Tank>(ResourceManager::getSprite("tankSprite_top"),
+                                     ResourceManager::getSprite("tankSprite_bottom"),
+                                     ResourceManager::getSprite("tankSprite_left"),
+                                     ResourceManager::getSprite("tankSprite_right"),
+                                     6.5e-8f, glm::vec2(0.f, 0.f),glm::vec2(16.f, 16.f));
 
     m_pLevel = std::make_unique<Level>(ResourceManager::getLevels()[0]);
 

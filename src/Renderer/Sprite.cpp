@@ -14,6 +14,7 @@ namespace RenderEngine
 		const std::shared_ptr<ShaderProgram> pShaderProgram)
 		: m_pTexture(pTexture)
 		, m_pShaderProgram(pShaderProgram)
+		, m_lastFrameId(0)
 	{
 		const GLfloat vertexCoords[] = {
 			 0.f, 0.f,
@@ -26,9 +27,9 @@ namespace RenderEngine
 
 		const GLfloat textureCoords[] = {
 
-            subTexture.leftBottomUV.x,	subTexture.leftBottomUV.y,
-            subTexture.leftBottomUV.x,	subTexture.rightTopUV.y,
-            subTexture.rightTopUV.x,	subTexture.rightTopUV.y,
+			subTexture.leftBottomUV.x,	subTexture.leftBottomUV.y,
+			subTexture.leftBottomUV.x,	subTexture.rightTopUV.y,
+			subTexture.rightTopUV.x,	subTexture.rightTopUV.y,
 			subTexture.rightTopUV.x,	subTexture.leftBottomUV.y,
 		};
 
@@ -36,7 +37,7 @@ namespace RenderEngine
 			0, 1, 2,
 			2, 3, 0,
 		};
-		
+
 		m_vertexCoordsBuffer.init(vertexCoords, 8 * sizeof(GLfloat)); // second - 2 * 4
 		VertexBufferLayout vertexCoordsLayout;
 		vertexCoordsLayout.addElementLayoutFloat(2, false);
@@ -58,8 +59,26 @@ namespace RenderEngine
 	{
 	}
 
-	void Sprite::render(const glm::vec2& position, const glm::vec2& size, const float rotation) const
+	void Sprite::render(const glm::vec2& position, const glm::vec2& size, const float rotation, const size_t frameId) const
 	{
+
+		if (m_lastFrameId != frameId)
+		{
+			m_lastFrameId = frameId;
+
+			const FrameDescription& currentFrameDescription = m_framesDescription[frameId];
+
+			const GLfloat textureCoords[] = {
+
+				currentFrameDescription.leftBottomUV.x,	currentFrameDescription.leftBottomUV.y,
+				currentFrameDescription.leftBottomUV.x,	currentFrameDescription.rightTopUV.y,
+				currentFrameDescription.rightTopUV.x,	currentFrameDescription.rightTopUV.y,
+				currentFrameDescription.rightTopUV.x,	currentFrameDescription.leftBottomUV.y,
+			};
+
+			m_textureCoordsBuffer.update(textureCoords, 8 * sizeof(GLfloat));
+		}
+
 		m_pShaderProgram->use();
 
 		glm::mat4 model(1.f);
@@ -74,9 +93,22 @@ namespace RenderEngine
 
 		glActiveTexture(GL_TEXTURE0);
 		m_pTexture->bind();
-		
-		// m_vertexArray.unBind();
 
 		Renderer::draw(m_vertexArray, m_indexBuffer, *m_pShaderProgram);
+	}
+
+	void Sprite::insertFrames(std::vector<FrameDescription> framesDescriptions)
+	{
+		m_framesDescription = std::move(framesDescriptions);
+	}
+
+	uint64_t Sprite::getFramesDuration(const size_t frameId) const
+	{
+		return m_framesDescription[frameId].duration;
+	}
+
+	size_t Sprite::getFramesCount() const
+	{
+		return m_framesDescription.size();
 	}
 }

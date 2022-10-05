@@ -13,8 +13,6 @@ add_executable(${PROJECT_NAME}
 	src/Renderer/Texture2D.cpp
 	src/Renderer/Sprite.cpp
 	src/Renderer/Sprite.h	
-	src/Renderer/AnimatedSprite.cpp
-	src/Renderer/AnimatedSprite.h
 	src/Renderer/VertexBuffer.cpp
 	src/Renderer/VertexBuffer.h
 	src/Renderer/VertexArray.cpp
@@ -24,7 +22,9 @@ add_executable(${PROJECT_NAME}
 	src/Renderer/IndexBuffer.cpp
 	src/Renderer/IndexBuffer.h
 	src/Renderer/Renderer.h
-	src/Renderer/Renderer.cpp
+	src/Renderer/Renderer.cpp	
+	src/Renderer/SpriteAnimator.h
+	src/Renderer/SpriteAnimator.cpp
 
 	src/Resources/ResourceManager.cpp
 	src/Resources/ResourceManager.h
@@ -42,7 +42,6 @@ add_executable(${PROJECT_NAME}
 	src/Game/GameObjects/BrickWall.cpp
 	src/Game/GameObjects/BrickWall.h
 
-	
 	res/shaders/vertex.vert
 	res/shaders/fragment.frag
 	res/shaders/fSprite.frag
