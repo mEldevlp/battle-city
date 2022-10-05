@@ -127,8 +127,8 @@ bool Game::init()
         std::cerr << "Cant find animated sprite: " << "TanksAnimatedSprite" << std::endl;
         return false;
     }
-
-    m_pTank = std::make_unique<Tank>(pTanksAnimatedSprite, .0000001f, glm::vec2(0.f, 0.f),glm::vec2(16.f, 16.f));
+    
+    m_pTank = std::make_unique<Tank>(pTanksAnimatedSprite, 6.5e-8f, glm::vec2(0.f, 0.f),glm::vec2(16.f, 16.f));
 
     m_pLevel = std::make_unique<Level>(ResourceManager::getLevels()[0]);
 
