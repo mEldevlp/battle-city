@@ -51,18 +51,16 @@ add_executable(${PROJECT_NAME}
 	src/Game/GameObjects/Water.h
 	src/Game/GameObjects/Eagle.cpp
 	src/Game/GameObjects/Eagle.h
+	src/Game/GameObjects/Border.cpp
+	src/Game/GameObjects/Border.h
 
-	res/shaders/vertex.vert
-	res/shaders/fragment.frag
 	res/shaders/fSprite.frag
 	res/shaders/vSprite.vert
 	res/resources.json
 )
 
 set_target_properties(${PROJECT_NAME}  PROPERTIES
-  RESOURCE "res/shaders/vertex.vert
-	res/shaders/fragment.frag
-	res/shaders/fSprite.frag
+  RESOURCE "res/shaders/fSprite.frag
 	res/shaders/vSprite.vert
 	res/resources.json")
 
