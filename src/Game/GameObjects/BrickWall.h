@@ -57,9 +57,13 @@ public:
 	virtual void update(const uint64_t delta) override;
 
 private:
+	void renderBrick(const EBrickLocation eBricklocation) const;
+
 	std::array<std::shared_ptr<RenderEngine::Sprite>, 15> m_sprites;
 	std::array<EBrickState, 4> m_eCurrentBrickState;
-	void renderBrick(const EBrickLocation eBricklocation) const;
+
+	std::array<glm::vec2, 4> m_blockOffsets;
+
 
 
 };

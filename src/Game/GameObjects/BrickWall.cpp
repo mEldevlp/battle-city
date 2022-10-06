@@ -10,6 +10,11 @@ BrickWall::BrickWall(const EBrickWallType eBrickWallType, const glm::vec2& posit
 							EBrickState::Destroyed,
 							EBrickState::Destroyed,
 							EBrickState::Destroyed, }
+	, m_blockOffsets{ 
+						glm::vec2(0.f, m_size.y / 2.f),
+						glm::vec2(m_size.x / 2.f, m_size.y / 2.f),
+						glm::vec2(0.f, 0.f),
+						glm::vec2(m_size.x / 2.f, 0.f) }
 {
 	m_sprites[static_cast<size_t>(EBrickState::All)]					= ResourceManager::getSprite("brickWall_All");
 	m_sprites[static_cast<size_t>(EBrickState::TopLeft)]				= ResourceManager::getSprite("brickWall_TopLeft");
@@ -75,10 +80,12 @@ void BrickWall::renderBrick(const EBrickLocation eBricklocation) const
 
 	if (const EBrickState state = m_eCurrentBrickState[static_cast<size_t>(eBricklocation)]; state != EBrickState::Destroyed)
 	{
-		m_sprites[static_cast<size_t>(state)]->render(m_position + offsets[static_cast<size_t>(eBricklocation)], m_size / 2.f, m_rotation);
+		m_sprites[static_cast<size_t>(state)]->render(m_position + m_blockOffsets[static_cast<size_t>(eBricklocation)], m_size / 2.f, m_rotation);
 	}
-}
+	
+	int state = 0;
 
+}
 
 void BrickWall::render() const
 {
