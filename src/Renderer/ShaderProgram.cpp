@@ -96,9 +96,14 @@ namespace RenderEngine
 		shaderProgram.m_isCompiled = false;
 	}
 
-	void ShaderProgram::setInt(const std::string& textureName, const GLint value)
+	void ShaderProgram::setInt(const std::string& name, const GLint value)
 	{
-		glUniform1i(glGetUniformLocation(m_ID, textureName.c_str()), value);
+		glUniform1i(glGetUniformLocation(m_ID, name.c_str()), value);
+	}	
+	
+	void ShaderProgram::setFloat(const std::string& name, const GLfloat value)
+	{
+		glUniform1f(glGetUniformLocation(m_ID, name.c_str()), value);
 	}
 
 	void ShaderProgram::setMatrix4(const std::string& name, const glm::mat4& matrix)

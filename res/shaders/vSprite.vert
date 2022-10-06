@@ -7,9 +7,11 @@ out vec2 texCoords;
 
 uniform mat4 modelMat;
 uniform mat4 projectionMat;
+uniform float layer;
+
 
 void main()
 {
-   texCoords = texture_coords;
-   gl_Position = projectionMat * modelMat * vec4(vertex_position, 0.0, 1.0);
+	texCoords = texture_coords;
+	gl_Position = projectionMat * modelMat * vec4(vertex_position, layer, 1.0);
 }

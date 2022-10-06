@@ -37,8 +37,7 @@ public:
 		BottomRight
 	};
 
-
-	BetonWall(const EBetonWallType eBetonWallType, const glm::vec2& position, const glm::vec2& size, const float rotation);
+	BetonWall(const EBetonWallType eBetonWallType, const glm::vec2& position, const glm::vec2& size, const float rotation, const float layer);
 	virtual void render() const override;
 	virtual void update(const uint64_t delta) override;
 
@@ -49,5 +48,4 @@ private:
 	std::array<EBlockState, 4> m_eCurrentBlockState;
 
 	std::array<glm::vec2, 4> m_blockOffsets;
-
 };

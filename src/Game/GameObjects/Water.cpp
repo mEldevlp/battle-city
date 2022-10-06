@@ -4,8 +4,8 @@
 #include "../../Resources/ResourceManager.h"
 
 
-Water::Water(const glm::vec2& position, const glm::vec2& size, const float rotation)
-	: IGameObject(position, size, rotation)
+Water::Water(const glm::vec2& position, const glm::vec2& size, const float rotation, const float layer)
+	: IGameObject(position, size, rotation, layer)
 	, m_sprite(ResourceManager::getSprite("water"))
 	, m_spriteAnimator(m_sprite)
 	, m_blockOffsets{ 
@@ -17,7 +17,7 @@ Water::Water(const glm::vec2& position, const glm::vec2& size, const float rotat
 
 void Water::renderBlock(const EBlockLocation eBlocklocation) const
 {
-	m_sprite->render(m_position + m_blockOffsets[static_cast<size_t>(eBlocklocation)], m_size / 2.f, m_rotation, m_spriteAnimator.getCurrentFrame());
+	m_sprite->render(m_position + m_blockOffsets[static_cast<size_t>(eBlocklocation)], m_size / 2.f, m_rotation, m_layer, m_spriteAnimator.getCurrentFrame());
 }
 
 void Water::render() const

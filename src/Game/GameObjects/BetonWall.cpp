@@ -4,8 +4,8 @@
 #include "../../Resources/ResourceManager.h"
 
 
-BetonWall::BetonWall(const EBetonWallType eBetonWallType, const glm::vec2& position, const glm::vec2& size, const float rotation)
-	: IGameObject(position, size, rotation)
+BetonWall::BetonWall(const EBetonWallType eBetonWallType, const glm::vec2& position, const glm::vec2& size, const float rotation, const float layer)
+	: IGameObject(position, size, rotation, layer)
 	, m_eCurrentBlockState{ EBlockState::Destroyed,
 							EBlockState::Destroyed,
 							EBlockState::Destroyed,
@@ -55,16 +55,9 @@ BetonWall::BetonWall(const EBetonWallType eBetonWallType, const glm::vec2& posit
 
 void BetonWall::renderBlock(const EBlockLocation eBlocklocation) const
 {
-	static const std::array<glm::vec2, 4> offsets = {
-		glm::vec2(0.f, m_size.y / 2.f),
-		glm::vec2(m_size.x / 2.f, m_size.y / 2.f),
-		glm::vec2(0.f, 0.f),
-		glm::vec2(m_size.x / 2.f, 0.f),
-	};
-
 	if (const EBlockState state = m_eCurrentBlockState[static_cast<size_t>(eBlocklocation)]; state != EBlockState::Destroyed)
 	{
-		m_sprite->render(m_position + m_blockOffsets[static_cast<size_t>(eBlocklocation)], m_size / 2.f, m_rotation);
+		m_sprite->render(m_position + m_blockOffsets[static_cast<size_t>(eBlocklocation)], m_size / 2.f, m_rotation, m_layer);
 	}
 }
 

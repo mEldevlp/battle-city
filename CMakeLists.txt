@@ -77,6 +77,16 @@ file(GLOB_RECURSE SHADERS LIST_DIRECTORIES false
 source_group("Resource Files" FILES ${SHADERS})
 
 
+file(GLOB_RECURSE GAMEOBJECT_SRC LIST_DIRECTORIES false
+	"${CMAKE_SOURCE_DIR}/src/Game/GameObjects/*.cpp")
+
+file(GLOB_RECURSE GAMEOBJECT_H LIST_DIRECTORIES false
+	"${CMAKE_SOURCE_DIR}/src/Game/GameObjects/*.h")
+
+source_group("Source Files//Game Objects" FILES ${GAMEOBJECT_SRC})
+source_group("Header Files//Game Objects" FILES ${GAMEOBJECT_H})
+
+
 target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_17)
 
 set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)

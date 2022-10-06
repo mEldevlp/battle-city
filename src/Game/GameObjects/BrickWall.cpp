@@ -4,8 +4,8 @@
 #include "../../Resources/ResourceManager.h"
 
 
-BrickWall::BrickWall(const EBrickWallType eBrickWallType, const glm::vec2& position, const glm::vec2& size, const float rotation)
-	: IGameObject(position, size, rotation)
+BrickWall::BrickWall(const EBrickWallType eBrickWallType, const glm::vec2& position, const glm::vec2& size, const float rotation, const float layer)
+	: IGameObject(position, size, rotation, layer)
 	, m_eCurrentBrickState{ EBrickState::Destroyed,
 							EBrickState::Destroyed,
 							EBrickState::Destroyed,
@@ -71,20 +71,13 @@ BrickWall::BrickWall(const EBrickWallType eBrickWallType, const glm::vec2& posit
 
 void BrickWall::renderBrick(const EBrickLocation eBricklocation) const
 {
-	static const std::array<glm::vec2, 4> offsets = {
-		glm::vec2(0.f, m_size.y / 2.f),
-		glm::vec2(m_size.x / 2.f, m_size.y / 2.f),
-		glm::vec2(0.f, 0.f),
-		glm::vec2(m_size.x / 2.f, 0.f),
-	};
-
 	if (const EBrickState state = m_eCurrentBrickState[static_cast<size_t>(eBricklocation)]; state != EBrickState::Destroyed)
 	{
-		m_sprites[static_cast<size_t>(state)]->render(m_position + m_blockOffsets[static_cast<size_t>(eBricklocation)], m_size / 2.f, m_rotation);
+		m_sprites[static_cast<size_t>(state)]->render(m_position + m_blockOffsets[static_cast<size_t>(eBricklocation)], m_size / 2.f, m_rotation, m_layer);
 	}
 	
 	int state = 0;
-
+	 
 }
 
 void BrickWall::render() const

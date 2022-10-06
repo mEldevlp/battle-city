@@ -22,7 +22,7 @@ public:
 	};
 
 
-	Trees(const glm::vec2& position, const glm::vec2& size, const float rotation);
+	Trees(const glm::vec2& position, const glm::vec2& size, const float rotation, const float layer);
 	virtual void render() const override;
 
 private:

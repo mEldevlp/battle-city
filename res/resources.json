@@ -2,8 +2,8 @@
 	"shaders": [
 		{
 			"name": "spriteShader",
-			"filePath_v": "res/shaders/vSprite.txt",
-			"filePath_f": "res/shaders/fSprite.txt"
+			"filePath_v": "res/shaders/vSprite.vert",
+			"filePath_f": "res/shaders/fSprite.frag"
 		}
 	],
 

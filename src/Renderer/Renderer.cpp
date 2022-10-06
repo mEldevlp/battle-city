@@ -17,10 +17,24 @@ namespace RenderEngine {
 		glClearColor(r, g, b, a);
 	}
 
+
+	void Renderer::setDepthTest(const bool enable)
+	{
+		if (enable)
+		{
+			glEnable(GL_DEPTH_TEST);
+		}
+		else
+		{
+			glDisable(GL_DEPTH_TEST);
+		}
+	}
+
 	void Renderer::clear()
 	{
-		glClear(GL_COLOR_BUFFER_BIT);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	}
+
 
 	void Renderer::setViewPort(unsigned int width, unsigned int height, unsigned int leftOffset, unsigned int bottomOffset)
 	{
