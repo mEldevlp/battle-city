@@ -19,11 +19,7 @@ public:
 		RIGHT
 	};
 
-	Tank(std::shared_ptr<RenderEngine::Sprite> pSprite_top,
-		 std::shared_ptr<RenderEngine::Sprite> pSprite_bottom,
-		 std::shared_ptr<RenderEngine::Sprite> pSprite_left,
-		 std::shared_ptr<RenderEngine::Sprite> pSprite_right,
-		 const float velocity,
+	Tank(const float velocity,
 		 const glm::vec2& position,
 		 const glm::vec2& size);
 
