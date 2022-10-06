@@ -2,6 +2,10 @@
 
 #include "GameObjects/BrickWall.h"
 #include "GameObjects/BetonWall.h"
+#include "GameObjects/Trees.h"
+#include "GameObjects/Ice.h"
+#include "GameObjects/Water.h"
+#include "GameObjects/Eagle.h"
 
 #include <iostream>
 
@@ -11,7 +15,7 @@ std::shared_ptr<IGameObject> createGameObjectFromDescription(const char descript
 {
 	switch (description)
 	{
-	/* Brick wall */
+	/* ... Brick wall */
 	case '0': return std::make_shared<BrickWall>(BrickWall::EBrickWallType::Right, position, size, rotation);
 	case '1': return std::make_shared<BrickWall>(BrickWall::EBrickWallType::Bottom, position, size, rotation);
 	case '2': return std::make_shared<BrickWall>(BrickWall::EBrickWallType::Left, position, size, rotation);
@@ -22,12 +26,24 @@ std::shared_ptr<IGameObject> createGameObjectFromDescription(const char descript
 	case 'I': return std::make_shared<BrickWall>(BrickWall::EBrickWallType::TopLeft, position, size, rotation);
 	case 'J': return std::make_shared<BrickWall>(BrickWall::EBrickWallType::TopRight, position, size, rotation);
 
-	/* Beton wall */
+	/* ... Beton wall */
 	case '5': return std::make_shared<BetonWall>(BetonWall::EBetonWallType::Right, position, size, rotation);
 	case '6': return std::make_shared<BetonWall>(BetonWall::EBetonWallType::Bottom, position, size, rotation);
 	case '7': return std::make_shared<BetonWall>(BetonWall::EBetonWallType::Left, position, size, rotation);
 	case '8': return std::make_shared<BetonWall>(BetonWall::EBetonWallType::Top, position, size, rotation);
 	case '9': return std::make_shared<BetonWall>(BetonWall::EBetonWallType::All, position, size, rotation);
+
+	/* ... Tree */
+	case 'B': return std::make_shared<Trees>(position, size, rotation);
+
+	/* ... Ice */
+	case 'C': return std::make_shared<Ice>(position, size, rotation);	
+		
+	/* ... Water */
+	case 'A': return std::make_shared<Water>(position, size, rotation);	
+	
+	/* ... Eagle */
+	case 'E': return std::make_shared<Eagle>(position, size, rotation);
 
 	case 'D': return nullptr;
 	default: std::cerr << "Unknown Game object: " << description << std::endl;
