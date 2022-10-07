@@ -19,7 +19,8 @@ void PhysicsEngine::update(const double tickrate)
 	{
 		if (currentObject->getCurrentVelocity() > 0)
 		{
-			currentObject->getCurrentPosition() += currentObject->getCurrentDirection() * static_cast<float>(currentObject->getCurrentVelocity() * tickrate);
+			currentObject->getCurrentPosition() += currentObject->getCurrentDirection() *
+				static_cast<float>(currentObject->getCurrentVelocity() * tickrate);
 		}
 	}
 }
