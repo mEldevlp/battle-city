@@ -5,6 +5,7 @@
 
 #include "IGameObject.h"
 #include "../../Renderer/SpriteAnimator.h"
+#include "../../System/Timer.h"
 
 namespace RenderEngine {
 	class Sprite;
@@ -19,15 +20,16 @@ public:
 		RIGHT
 	};
 
-	Tank(const float velocity,
+	Tank(const double maxVelocity,
 		const glm::vec2& position,
 		const glm::vec2& size,
 		const float layer);
 
 	void render() const override;
 	void setOrientation(const EOrientation eOrientation);
-	void move(const bool move);
-	void update(const uint64_t delta) override;
+	void update(const double delta) override;
+	double getMaxVelocity() const { return m_maxVelocity; }
+	void setVelocity(const double velocity) override;
 
 
 private:
@@ -43,7 +45,17 @@ private:
 	RenderEngine::SpriteAnimator m_spriteAnimator_left;
 	RenderEngine::SpriteAnimator m_spriteAnimator_right;
 
-	bool m_move;
-	float m_velocity;
-	glm::vec2 m_moveOffset;
+	std::shared_ptr<RenderEngine::Sprite> m_pSprite_respawn;
+	RenderEngine::SpriteAnimator m_spriteAnimator_respawn;
+
+	std::shared_ptr<RenderEngine::Sprite> m_pSprite_shield;
+	RenderEngine::SpriteAnimator m_spriteAnimator_shield;
+
+	Timer m_respawnTimer;
+	Timer m_shieldTimer;
+
+	double m_maxVelocity;
+
+	bool m_isSpawning;
+	bool m_hasShield;
 };

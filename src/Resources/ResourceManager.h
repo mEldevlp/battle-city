@@ -45,15 +45,6 @@ public:
 		const unsigned int subTextureWidth,
 		const unsigned int subTextureHeight);
 
-
-	//static std::shared_ptr<RenderEngine::AnimatedSprite> loadAnimatedSprite(const std::string& spriteName,
-	//	const std::string& textureName,
-	//	const std::string& shaderName,
-	//	const std::string& subTextureName = "default");
-
-	//static std::shared_ptr<RenderEngine::AnimatedSprite> getAnimatedSprite(const std::string& spriteName);
-
-
 	static bool loadJSONResources(const std::string& JSONpath);
 
 	static const std::vector<std::vector<std::string>>& getLevels() { return m_levels; }

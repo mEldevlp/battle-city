@@ -72,12 +72,12 @@ Level::Level(const std::vector<std::string>& levelDescription)
 
 	m_mapObjects.reserve(m_width * m_height + 4);
 
-    m_playerRespawn_1 = { BLOCK_SIZE * (m_width / 2.f - 1.f),   BLOCK_SIZE / 2.f };
-    m_playerRespawn_2 = { BLOCK_SIZE * (m_width / 2.f + 3.f),   BLOCK_SIZE / 2.f };
+    m_playerRespawn_1   = { BLOCK_SIZE * (m_width / 2.f - 1.f),  BLOCK_SIZE / 2.f };
+    m_playerRespawn_2   = { BLOCK_SIZE * (m_width / 2.f + 3.f),  BLOCK_SIZE / 2.f };
 
-    m_enemyRespawn_1 = {  BLOCK_SIZE,                           BLOCK_SIZE * m_height - BLOCK_SIZE  / 2.f};
-    m_enemyRespawn_2 = {  BLOCK_SIZE * (m_width / 2.f + 1),     BLOCK_SIZE * m_height - BLOCK_SIZE  / 2.f};
-    m_enemyRespawn_3 = {  BLOCK_SIZE * m_width,                 BLOCK_SIZE * m_height - BLOCK_SIZE  / 2.f};
+    m_enemyRespawn_1    = {  BLOCK_SIZE,                          BLOCK_SIZE * m_height - BLOCK_SIZE  / 2.f};
+    m_enemyRespawn_2    = {  BLOCK_SIZE * (m_width / 2.f + 1.f),  BLOCK_SIZE * m_height - BLOCK_SIZE  / 2.f};
+    m_enemyRespawn_3    = {  BLOCK_SIZE * m_width,                BLOCK_SIZE * m_height - BLOCK_SIZE  / 2.f};
 
 
     size_t currentBottomOffset = static_cast<size_t>(BLOCK_SIZE * (m_height - 1)) + BLOCK_SIZE / 2.f;
@@ -142,7 +142,7 @@ void Level::render() const
 	}
 }
 
-void Level::update(const uint64_t delta)
+void Level::update(const double delta)
 {
 	for (const auto& currentMapObject : m_mapObjects)
 	{

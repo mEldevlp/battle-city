@@ -207,15 +207,15 @@
 			"frames": [
 				{
 					"subTexture": "water1",
-					"duration": 500000000
+					"duration": 500
 				},
 				{
 					"subTexture": "water2",
-					"duration": 500000000
+					"duration": 500
 				},
 				{
 					"subTexture": "water3",
-					"duration": 500000000
+					"duration": 500
 				}
 			]
 		},
@@ -272,19 +272,27 @@
 			"frames": [
 				{
 					"subTexture": "respawn1",
-					"duration": 500000000
+					"duration": 100
 				},
 				{
 					"subTexture": "respawn2",
-					"duration": 500000000
+					"duration": 100
 				},
 				{
 					"subTexture": "respawn3",
-					"duration": 500000000
+					"duration": 100
 				},
 				{
 					"subTexture": "respawn4",
-					"duration": 500000000
+					"duration": 100
+				},
+				{
+					"subTexture": "respawn3",
+					"duration": 100
+				},
+				{
+					"subTexture": "respawn2",
+					"duration": 100
 				}
 			]
 		},
@@ -296,11 +304,11 @@
 			"frames": [
 				{
 					"subTexture": "shield1",
-					"duration": 500000000
+					"duration": 70
 				},
 				{
-					"subTexture": "shield1",
-					"duration": 500000000
+					"subTexture": "shield2",
+					"duration": 70
 				}
 			]
 		},
@@ -312,11 +320,11 @@
 			"frames": [
 				{
 					"subTexture": "explosion1",
-					"duration": 500000000
+					"duration": 500
 				},
 				{
 					"subTexture": "explosion2",
-					"duration": 500000000
+					"duration": 500
 				}
 			]
 		},
@@ -328,11 +336,11 @@
 			"frames": [
 				{
 					"subTexture": "bigExplosion1_top_left",
-					"duration": 500000000
+					"duration": 500
 				},
 				{
 					"subTexture": "bigExplosion2_top_left",
-					"duration": 500000000
+					"duration": 500
 				}
 			]
 		},
@@ -344,11 +352,11 @@
 			"frames": [
 				{
 					"subTexture": "bigExplosion1_top_right",
-					"duration": 500000000
+					"duration": 500
 				},
 				{
 					"subTexture": "bigExplosion2_top_right",
-					"duration": 500000000
+					"duration": 500
 				}
 			]
 		},
@@ -360,11 +368,11 @@
 			"frames": [
 				{
 					"subTexture": "bigExplosion1_bottom_left",
-					"duration": 500000000
+					"duration": 500
 				},
 				{
 					"subTexture": "bigExplosion2_bottom_left",
-					"duration": 500000000
+					"duration": 500
 				}
 			]
 		},
@@ -376,11 +384,11 @@
 			"frames": [
 				{
 					"subTexture": "bigExplosion1_bottom_right",
-					"duration": 500000000
+					"duration": 500
 				},
 				{
 					"subTexture": "bigExplosion2_bottom_right",
-					"duration": 500000000
+					"duration": 500
 				}
 			]
 		},
@@ -438,11 +446,11 @@
 			"frames": [
 				{
 					"subTexture": "yellowType1_top1",
-					"duration": 500000000
+					"duration": 500
 				},
 				{
 					"subTexture": "yellowType1_top2",
-					"duration": 500000000
+					"duration": 500
 				}
 			]
 		},
@@ -455,11 +463,11 @@
 			"frames": [
 				{
 					"subTexture": "yellowType1_bottom1",
-					"duration": 500000000
+					"duration": 500
 				},
 				{
 					"subTexture": "yellowType1_bottom2",
-					"duration": 500000000
+					"duration": 500
 				}
 			]
 		},
@@ -472,11 +480,11 @@
 			"frames": [
 				{
 					"subTexture": "yellowType1_left1",
-					"duration": 500000000
+					"duration": 500
 				},
 				{
 					"subTexture": "yellowType1_left2",
-					"duration": 500000000
+					"duration": 500
 				}
 			]
 		},
@@ -489,11 +497,11 @@
 			"frames": [
 				{
 					"subTexture": "yellowType1_right1",
-					"duration": 500000000
+					"duration": 500
 				},
 				{
 					"subTexture": "yellowType1_right2",
-					"duration": 500000000
+					"duration": 500
 				}
 			]
 		}
