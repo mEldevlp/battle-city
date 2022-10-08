@@ -92,7 +92,7 @@ int main(int argc, char** argv)
     
     ResourceManager::setExecutablePath(argv[0]);
     
-    PhysicsEngine::init();
+    Physics::PhysicsEngine::init();
 
     g_game->init();
 
@@ -112,7 +112,7 @@ int main(int argc, char** argv)
         lastTime = currentTime;
 
         g_game->update(duration);
-        PhysicsEngine::update(duration);
+        Physics::PhysicsEngine::update(duration);
 
         /* Render here */
         RenderEngine::Renderer::clear();
@@ -126,11 +126,10 @@ int main(int argc, char** argv)
 
     }
 
+    Physics::PhysicsEngine::terminate();
     g_game = nullptr;
-
     ResourceManager::unloadAllResources();
     
-
     glfwTerminate();
     return 0;
 }

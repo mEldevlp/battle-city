@@ -36,6 +36,8 @@ Tank::Tank(const double maxVelocity,
 	m_shieldTimer.setCallback([&]() {
 			m_hasShield = false;
 		});
+
+	m_collider.emplace_back(glm::vec2(0), m_size);
 }
 
 void Tank::setVelocity(const double velocity)

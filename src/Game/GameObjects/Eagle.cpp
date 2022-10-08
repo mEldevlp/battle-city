@@ -9,7 +9,9 @@ Eagle::Eagle(const glm::vec2& position, const glm::vec2& size, const float rotat
 	, m_eCurrentState(EEagleState::Alive)
 	, m_sprite{ ResourceManager::getSprite("eagle"),
 				ResourceManager::getSprite("eagle_dead") }
-{}
+{
+	m_collider.emplace_back(glm::vec2(0), m_size);
+}
 
 void Eagle::render() const
 {

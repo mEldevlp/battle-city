@@ -21,34 +21,43 @@ BetonWall::BetonWall(const EBetonWallType eBetonWallType, const glm::vec2& posit
 	{
 	case EBetonWallType::All:
 		m_eCurrentBlockState.fill(EBlockState::Enabled);
+		m_collider.emplace_back(glm::vec2(0), m_size);
 		break;
 	case EBetonWallType::Top:
 		m_eCurrentBlockState[static_cast<size_t>(EBlockLocation::TopLeft)]	= EBlockState::Enabled;
 		m_eCurrentBlockState[static_cast<size_t>(EBlockLocation::TopRight)] = EBlockState::Enabled;
+		m_collider.emplace_back(glm::vec2(0, m_size.y / 2.f), m_size);
 		break;
 	case EBetonWallType::Bottom:
 		m_eCurrentBlockState[static_cast<size_t>(EBlockLocation::BottomLeft)]	= EBlockState::Enabled;
 		m_eCurrentBlockState[static_cast<size_t>(EBlockLocation::BottomRight)]	= EBlockState::Enabled;
+		m_collider.emplace_back(glm::vec2(0), glm::vec2(m_size.x, m_size.y / 2.f));
 		break;
 	case EBetonWallType::Left:
 		m_eCurrentBlockState[static_cast<size_t>(EBlockLocation::TopLeft)]		= EBlockState::Enabled;
 		m_eCurrentBlockState[static_cast<size_t>(EBlockLocation::BottomLeft)]	= EBlockState::Enabled;
+		m_collider.emplace_back(glm::vec2(0), glm::vec2(m_size.x / 2.f, m_size.y));
 		break;
 	case EBetonWallType::Right:
 		m_eCurrentBlockState[static_cast<size_t>(EBlockLocation::TopRight)]		= EBlockState::Enabled;
 		m_eCurrentBlockState[static_cast<size_t>(EBlockLocation::BottomRight)]	= EBlockState::Enabled;
+		m_collider.emplace_back(glm::vec2(m_size.x / 2.f, 0), m_size);
 		break;
 	case EBetonWallType::TopLeft:
 		m_eCurrentBlockState[static_cast<size_t>(EBlockLocation::TopLeft)] = EBlockState::Enabled;
+		m_collider.emplace_back(glm::vec2(0, m_size.y / 2.f), glm::vec2(m_size.x / 2.f, m_size.y));
 		break;
 	case EBetonWallType::TopRight:
 		m_eCurrentBlockState[static_cast<size_t>(EBlockLocation::TopRight)] = EBlockState::Enabled;
+		m_collider.emplace_back(glm::vec2(m_size.x / 2.f, m_size.y / 2.f), m_size);
 		break;
 	case EBetonWallType::BottomLeft:
 		m_eCurrentBlockState[static_cast<size_t>(EBlockLocation::BottomLeft)] = EBlockState::Enabled;
+		m_collider.emplace_back(glm::vec2(0), glm::vec2(m_size.x / 2.f, m_size.y / 2.f));
 		break;
 	case EBetonWallType::BottomRight:
 		m_eCurrentBlockState[static_cast<size_t>(EBlockLocation::BottomRight)] = EBlockState::Enabled;
+		m_collider.emplace_back(glm::vec2(m_size.x / 2.f, 0), glm::vec2(m_size.x, m_size.y / 2.f));
 		break;
 	}
 }
