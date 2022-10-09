@@ -187,7 +187,7 @@ std::vector<std::shared_ptr<IGameObject>> Level::getObjectsInArea(const glm::vec
     glm::vec2 rightTop_coverted(std::clamp(rightTop.x - BLOCK_SIZE,                        0.f, static_cast<float>(m_widthPixels)),
                                 std::clamp(m_heightPixels - rightTop.y + BLOCK_SIZE / 2.f, 0.f, static_cast<float>(m_heightPixels)));
 
-    std::cout << "Position: \n" << "X: " << bottomLeft_coverted.x + BLOCK_SIZE / 2.f << "\nY: " << bottomLeft_coverted.y + BLOCK_SIZE / 2.f << std::endl;
+    //std::cout << "Position: \n" << "X: " << bottomLeft_coverted.x + BLOCK_SIZE / 2.f << "\nY: " << bottomLeft_coverted.y + BLOCK_SIZE / 2.f << std::endl;
 
 
     size_t startX = static_cast<size_t>(floor(bottomLeft_coverted.x / BLOCK_SIZE));
